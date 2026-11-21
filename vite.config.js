@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: { port: 5180, host: true },
+  preview: { port: 3367, host: true },
   worker: { format: 'es' },
   build: {
     chunkSizeWarningLimit: 2000,

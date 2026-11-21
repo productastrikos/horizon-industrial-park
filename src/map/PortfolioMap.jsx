@@ -7,7 +7,7 @@ import { useUi } from '../store/ui';
 
 // One basemap for both themes; dark theme renders it through a canvas filter
 // (pins/labels are DOM and stay unfiltered).
-const BASEMAP = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+const BASEMAP = import.meta.env.VITE_BASEMAP_STYLE; // set in .env / .env.production
 // MapLibre 6 resolves its worker relative to its own file; give it the Vite-bundled worker instead.
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 

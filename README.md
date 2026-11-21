@@ -12,7 +12,9 @@ npm run dev        # http://localhost:5180
 
 Login: `admin` / `Astrikos2026`
 
-Production build: `npm run build` → `dist/` (static, any web server; needs internet for map tiles).
+Production build: `npm run build` → `dist/` (static SPA).
+
+**Deployment (astrikos.xyz):** see [DEPLOY.md](DEPLOY.md) — frontend port 3367 → https://hip-poc.astrikos.xyz:8443 (`pm2 start serve --name "hip-poc_3367" -- ./dist -s -p 3367`).
 
 ## What's inside
 

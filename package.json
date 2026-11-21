@@ -2,12 +2,13 @@
   "name": "hip-command-center",
   "private": true,
   "version": "1.0.0",
-  "description": "Horizon Industrial Parks — Executive Command Center & Digital Twin (powered by Astrikos)",
+  "description": "Horizon Industrial Parks \u2014 Executive Command Center & Digital Twin (powered by Astrikos)",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "serve ./dist -s -p 3367"
   },
   "dependencies": {
     "@fontsource/barlow": "^5.1.0",
