@@ -1,0 +1,180 @@
+@import '@fontsource/barlow/400.css';
+@import '@fontsource/barlow/500.css';
+@import '@fontsource/barlow/600.css';
+@import '@fontsource/barlow/700.css';
+@import 'maplibre-gl/dist/maplibre-gl.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Design tokens — Horizon Industrial Parks (HiParks) brand
+   Orange #F47922 · Purple #8F53A1 · Green #2BB04C · Barlow
+   Light is the default theme; `.dark` on <html> switches.
+------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --bg: 245 245 243;
+  --surface: 255 255 255;
+  --surface-2: 250 250 249;
+  --surface-3: 240 240 238;
+  --border: 230 229 225;
+  --border-strong: 208 207 202;
+  --fg: 22 22 22;
+  --fg-muted: 82 81 78;
+  --fg-faint: 128 127 122;
+
+  --brand: 244 121 34;        /* #F47922 */
+  --brand-strong: 222 98 14;
+  --brand-soft: 254 240 229;
+  --purple: 143 83 161;       /* #8F53A1 */
+  --purple-soft: 244 236 247;
+  --green: 43 176 76;         /* #2BB04C */
+
+  /* status — reserved, never used as series colours */
+  --ok: 22 150 72;
+  --warn: 214 128 0;
+  --crit: 215 45 45;
+  --info: 42 120 214;
+
+  /* categorical series (validated: light surface) */
+  --s1: 42 120 214;   /* #2a78d6 blue   */
+  --s2: 235 104 52;   /* #eb6834 orange */
+  --s3: 143 83 161;   /* #8f53a1 purple */
+  --s4: 27 175 122;   /* #1baf7a aqua   */
+
+  --grad-brand: linear-gradient(100deg, #8f53a1 0%, #c2648a 55%, #f47922 100%);
+  --shadow-card: 0 1px 2px rgba(16, 16, 16, 0.04), 0 1px 1px rgba(16, 16, 16, 0.02);
+  --shadow-pop: 0 18px 48px -12px rgba(16, 16, 16, 0.22), 0 2px 6px rgba(16, 16, 16, 0.06);
+  --grid: 236 235 231;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: 13 13 15;
+  --surface: 23 23 26;
+  --surface-2: 28 28 32;
+  --surface-3: 36 36 41;
+  --border: 44 44 50;
+  --border-strong: 64 64 72;
+  --fg: 240 239 236;
+  --fg-muted: 178 177 170;
+  --fg-faint: 128 127 122;
+
+  --brand: 247 137 58;
+  --brand-strong: 250 155 85;
+  --brand-soft: 58 36 20;
+  --purple: 176 124 200;
+  --purple-soft: 46 33 52;
+  --green: 60 196 98;
+
+  --ok: 52 190 104;
+  --warn: 240 160 30;
+  --crit: 240 90 90;
+  --info: 80 150 235;
+
+  /* categorical series (validated: dark surface) */
+  --s1: 57 135 229;   /* #3987e5 */
+  --s2: 224 112 53;   /* #e07035 */
+  --s3: 166 121 201;  /* #a679c9 */
+  --s4: 25 158 112;   /* #199e70 */
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-pop: 0 22px 60px -12px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --grid: 40 40 46;
+}
+
+html, body, #root { height: 100%; }
+body {
+  @apply bg-bg text-fg font-sans antialiased;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+
+@layer components {
+  .card {
+    @apply bg-surface border border-line rounded-xl shadow-card;
+  }
+  .card-pad { @apply p-4; }
+  .card-title {
+    @apply text-[13px] font-semibold tracking-[0.04em] uppercase text-muted;
+  }
+  .h-section {
+    @apply text-[15px] font-semibold text-fg;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold leading-4;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 h-9 text-[13px] font-semibold transition-colors
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 disabled:opacity-50;
+  }
+  .btn-primary { @apply btn bg-brand text-white hover:bg-brand-strong; }
+  .btn-ghost { @apply btn text-muted hover:text-fg hover:bg-surface-3; }
+  .btn-outline { @apply btn border border-line text-fg bg-surface hover:bg-surface-3; }
+  .icon-btn {
+    @apply inline-flex items-center justify-center h-9 w-9 rounded-lg text-muted hover:text-fg hover:bg-surface-3 transition-colors
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/50;
+  }
+  .input {
+    @apply w-full h-11 rounded-lg border border-line bg-surface-2 px-3 text-[14px] text-fg placeholder:text-faint
+      focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition;
+  }
+  .label-xs { @apply text-[11px] font-semibold uppercase tracking-[0.06em] text-faint; }
+  .num { font-variant-numeric: tabular-nums; }
+  .grad-text {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .grad-bg { background: var(--grad-brand); }
+  .scroll-thin { scrollbar-width: thin; scrollbar-color: rgb(var(--border-strong)) transparent; }
+  .scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+  .scroll-thin::-webkit-scrollbar-thumb { background: rgb(var(--border-strong)); border-radius: 6px; }
+  .nav-item {
+    @apply flex items-center gap-3 rounded-lg px-3 h-10 text-[14px] font-medium text-muted hover:text-fg hover:bg-surface-3 transition-colors;
+  }
+  .nav-item.active {
+    @apply text-fg bg-brand-soft;
+    box-shadow: inset 3px 0 0 rgb(var(--brand));
+  }
+  .nav-item.active svg { color: rgb(var(--brand)); }
+  .tab {
+    @apply px-3 h-8 rounded-md text-[13px] font-semibold text-muted hover:text-fg transition-colors;
+  }
+  .tab.active { @apply bg-surface text-fg shadow-card; }
+}
+
+/* Recharts — keep the furniture recessive and theme-aware */
+.recharts-cartesian-grid line { stroke: rgb(var(--grid)); }
+.recharts-text { fill: rgb(var(--fg-faint)); font-size: 11px; }
+.recharts-cartesian-axis-line, .recharts-cartesian-axis-tick-line { stroke: rgb(var(--border)); }
+.recharts-tooltip-cursor { stroke: rgb(var(--border-strong)); }
+
+/* MapLibre theme tweaks */
+.maplibregl-ctrl-group { background: rgb(var(--surface)) !important; border: 1px solid rgb(var(--border)); box-shadow: var(--shadow-card) !important; }
+.dark .maplibregl-ctrl-group button .maplibregl-ctrl-icon { filter: invert(0.9); }
+.maplibregl-ctrl-attrib { font-size: 10px; background: rgb(var(--surface) / 0.75) !important; color: rgb(var(--fg-faint)); }
+.maplibregl-ctrl-attrib a { color: rgb(var(--fg-muted)) !important; }
+.maplibregl-popup-content { background: rgb(var(--surface)); color: rgb(var(--fg)); border-radius: 10px; box-shadow: var(--shadow-pop); padding: 10px 12px; border: 1px solid rgb(var(--border)); }
+.maplibregl-popup-tip { border-top-color: rgb(var(--surface)) !important; border-bottom-color: rgb(var(--surface)) !important; }
+
+/* CCTV fixed-camera still: slow drift + sensor grain so it reads as a live view */
+@keyframes cctvDrift { 0% { transform: scale(1.04) translate(0, 0); } 100% { transform: scale(1.09) translate(-1.2%, 0.8%); } }
+@keyframes cctvGrain { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-2%, 1%); } 50% { transform: translate(1%, -2%); } 75% { transform: translate(2%, 2%); } }
+.cctv-still { animation: cctvDrift 18s ease-in-out infinite alternate; will-change: transform; }
+.cctv-grain { opacity: .07; background-image: radial-gradient(rgba(255,255,255,.9) 0.6px, transparent 0.7px); background-size: 3px 3px; }
+
+/* Login hero slideshow */
+@keyframes kenBurns { 0% { transform: scale(1.02); } 100% { transform: scale(1.12); } }
+.hero-slide { transition: opacity 1.4s ease; }
+.hero-slide.is-on img { animation: kenBurns 9s ease-out forwards; }
+
+/* 3D twin html labels */
+.twin-label { pointer-events: none; white-space: nowrap; transform: translate3d(-50%, -100%, 0); }
+.twin-label.clickable { pointer-events: auto; cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
