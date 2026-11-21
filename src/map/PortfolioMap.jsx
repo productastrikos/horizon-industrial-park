@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { PARKS } from '../config/parks';
 import { BUILDINGS, BOUNDARY, ROADS, PARKING_ZONES, buildingToWorld, localToLngLat, TENANT_BY_ID } from '../config/malur';
 import { useUi } from '../store/ui';
@@ -7,6 +8,9 @@ import { useUi } from '../store/ui';
 // One basemap for both themes; dark theme renders it through a canvas filter
 // (pins/labels are DOM and stay unfiltered).
 const BASEMAP = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+// MapLibre 6 resolves its worker relative to its own file; give it the Vite-bundled worker instead.
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
+
 const INDIA = [[68.0, 7.5], [92.0, 30.5]];
 
 const healthTone = (p) => (!p ? 'ok' : p.alerts.critical > 0 ? 'crit' : p.health < 80 || p.alerts.warning >= 3 ? 'warn' : 'ok');
